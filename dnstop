@@ -1,0 +1,15 @@
+#!/usr/bin/env stap
+###########################################################################
+# 
+# dns_by_proc
+#
+# Prints DNS calls along with process names and their corresponding PIDs
+#
+# @author Thorsten Heymann <hek2mgl@metashock.net>
+# 
+###########################################################################
+
+probe process("/lib/x86_64-linux-gnu/libc.so.6").function("getaddrinfo").call {
+	printf("%s(%d) %s\n", execname(), pid(), user_string($name)) 
+}
+
